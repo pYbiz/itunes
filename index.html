@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>iTunes</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<style>
+
+  body {
+       font-size: 1.6em;
+       font-weight: 100;
+	   background-color: #fff;
+	   color: #000;
+  }
+
+  .container {
+	  margin-top: 22px;
+  }
+
+    h1 {
+   font-weight: 700;    text-align: center;
+  }
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 20px;
+    height: 50px;
+    line-height: 1.5;
+    color: #000;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #eee;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+   h1 i {
+   font-weight: 100;
+   font-style: normal;
+  }
+
+  a {
+	  color: #000 !important;
+	  font-weight: 500;
+	  text-decoration: none !important;
+  }
+</style>
+<script>
+
+</script>
+
+</head>
+<body>
+<div class="container">
+<center><h1><a href="#" onclick="document.location.reload();">iTunes</a></h1><br></center>
+		<input type="radio" name="type" class="radio-btn" id="album" value="album" checked>Album
+    <input type="radio" name="type" class="radio-btn" id="album320" value="album320">Album 320
+    <input type="radio" name="type" class="radio-btn" id="albumitunes" value="albumitunes">Album iTunes
+    <br>
+    <input type="radio" name="type" class="radio-btn" id="ep" value="ep">Ep
+    <input type="radio" name="type" class="radio-btn" id="ep320" value="ep320">Ep 320
+    <input type="radio" name="type" class="radio-btn" id="epitunes" value="epitunes">Ep iTunes
+    <br>
+    <input type="radio" name="type" class="radio-btn" id="song" value="song">Song
+    <input type="radio" name="type" class="radio-btn" id="song320" value="song320">Song 320
+    <input type="radio" name="type" class="radio-btn" id="songitunes" value="songitunes">Song iTunes
+    <br>
+    <input type="radio" name="type" class="radio-btn" id="soundtracks" value="soundtracks">Soundtracks
+    <input type="radio" name="type" class="radio-btn" id="soundtrack320" value="soundtrack320">Soundtrack 320
+    <input type="radio" name="type" class="radio-btn" id="soundtrackitunes" value="soundtrackitunes">Soundtrack iTunes
+    <br>
+    <input type="radio" name="type" class="radio-btn" id="mixtapes" value="mixtapes">Mixtapes
+    <input type="radio" name="type" class="radio-btn" id="mixtape320" value="mixtape320">Mixtape 320
+    <input type="radio" name="type" class="radio-btn" id="mixtapeitunes" value="mixtapeitunes">Mixtape iTunes
+
+    <input type="text" placeholder="https://itunes.apple.com/us/album/album-name/album-id..." class="form-control" id="name">
+		<input type="submit" class="btn btn-success" style="background-color: #000 !important; width: 100%; border: 1px solid #000 !important;" value="submit" onclick="getEmbedCode();"><br><br>
+		<p id="msg"></p>
+
+    <input type="text" id="title2" style="display:none;width:25%;"> <!--extra stuff -->
+    <button id="copyTitle2" style="display:none;">Copy</button><br><br>     <!--extra stuff -->
+
+    <input type="text" id="title" style="display:none;width:25%;">
+    <button id="copyTitle" style="display:none;">Copy</button>
+
+    <input type="text" id="artist" style="display:none;width:25%;">
+    <button id="copyArtist" style="display:none;">Copy</button>
+
+    <input type="text" id="genre" style="display:none;width:25%;">
+    <button id="copyGenre" style="display:none;">Copy</button>
+
+    <br><br>
+    <textarea id="info" style="width:100%;height:300px;display:none;"></textarea>
+
+    <br>
+    <center><button id="copyInfo" style="display:none;">Copy</button></center>
+    <br>
+    <center><input type="text" class="embedCode" id="albumEmbed" style="display:none;width:40%;"><button id="copyAlbum" style="display:none;">Album</button>
+    <input type="text" class="embedCode" id="singleEmbed" style="display:none;width:40%;"><button id="copySingle" style="display:none;">Single</button></center>
+    <br>
+    <br>
+    <textarea id="code" style="width:100%;height:54;">
+
+
+<a href="filecrypt" rel="noopener" target="_blank"><strong>Download</strong></a></textarea>
+    <br>
+    <center><button id="copyCode">Copy</button></center>
+    <br>
+    <center><button id="downloadBtn" style="display:none;">Get Artwork</button></center>
+    <br>
+    <br>
+
+    <div id="scrape" style="display:none;"></div>
+</div>
+<script type="text/javascript">
+  var codebtn = document.querySelector('#copyCode');
+  codebtn.addEventListener("click", function()
+  {
+      //select embed code
+      document.querySelector('#code').select();
+      // Copy the text inside the text field
+      document.execCommand("copy");
+      // alert("Single embed code copied!");
+  });
+</script>
+<script src="data.js" defer></script>
+<script src="data2.js" defer></script>
+<script src="fuckoff.js" defer></script>
+<script src="download.js" defer></script>
+</body>
+</html>
